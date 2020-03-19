@@ -2,7 +2,7 @@ package com.computeiros.educagreste.entities;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name="user")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserEntity {
 
