@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public boolean emailOcupied(String email) {
         return userRepository.findByEmail(email) != null;
@@ -24,8 +28,9 @@ public class UserService implements UserDetailsService {
         ue.setEmail(usuarioDto.getEmail());
         ue.setSenha(usuarioDto.getSenha());
         ue.setSobrenome(usuarioDto.getSobrenome());
-
+        ue.setSenha(passwordEncoder.encode(ue.getSenha()));
         ue = userRepository.save(ue);
+        usuarioDto.setSenha(ue.getSenha());
         return (ue != null) ? usuarioDto : null;
     }
 
