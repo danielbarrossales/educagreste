@@ -1,6 +1,7 @@
 package com.computeiros.educagreste.entidades;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name="user")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -14,6 +15,9 @@ public class UserEntity {
     private String sobrenome;
     private String email;
     private String senha;
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_funcao",joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "funcao_id"))
+    private Set<Funcao> funcoes;
 
     public UserEntity() {
     }
@@ -63,5 +67,13 @@ public class UserEntity {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Set<Funcao> getFuncoes() {
+        return funcoes;
+    }
+
+    public void setFuncoes(Set<Funcao> funcoes) {
+        this.funcoes = funcoes;
     }
 }

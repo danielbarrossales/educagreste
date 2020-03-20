@@ -6,17 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/cadastrar")
 public class CadastroUsuarioController {
 
     @Autowired
@@ -29,14 +27,14 @@ public class CadastroUsuarioController {
 
     @GetMapping
     public String mostrarFormularioCadastro(Model model) {
-        return "cadastro";
+        return "cadastrar";
     }
 
     @PostMapping
     public String cadastrarNovoUsuario(@ModelAttribute("usuario") @Valid CadastroUsuarioDto usuarioDto,
                                        BindingResult result) {
 
-        if (userService.emailOcupied(usuarioDto.getEmail())) {
+        if (userService.isEmailOcupado(usuarioDto.getEmail())) {
             result.rejectValue("email", null, "Já existe uma conta registrada com este e-mail");
             return "cadastro";
         }
@@ -46,6 +44,6 @@ public class CadastroUsuarioController {
         }*/
 
         userService.save(usuarioDto);
-        return "redirect:/cadastro?sucesso";
+        return "redirect:/cadastrar?sucesso";
     }
 }

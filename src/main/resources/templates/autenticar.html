@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Bem vindo</title>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">&#9776;</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Página de Login</h1>
+            <form th:action="@{/autenticar}" method="post">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">Nome de usuário ou senha inválidos.</div>
+                </div>
+                <div th:if="${param.logout}">
+                    <div class="alert alert-info">Você foi deslogado.</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>: <input type="text"
+                                                                          id="email" name="email" class="form-control"
+                                                                          autofocus="autofocus" placeholder="E-mail" />
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>: <input type="senha"
+                                                                id="senha" name="senha" class="form-control"
+                                                                placeholder="Senha" />
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" name="login-submit" id="login-submit"
+                                   class="form-control btn btn-primary" value="Log In" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span>Novo usuário? <a href="/" th:href="@{/cadastrar}">Cadastre-se aqui</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

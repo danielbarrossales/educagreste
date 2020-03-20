@@ -19,7 +19,8 @@ public class TestServicoUsuario {
 
     @Test
     void componentesInjetadosNaoSaoNulos(){
-        Assert.notNull(userService, "A classe '" + userService.getClass().getName() + "' não foi injetada pelo sprint");
+        Assert.notNull(userService, "A classe '" + userService.getClass().getName() +
+                "' não foi injetada pelo sprint");
     }
 
     @Test
@@ -32,8 +33,10 @@ public class TestServicoUsuario {
         usuarioDto.setTermos(true);
         //Testes
         Assert.notNull(userService.save(usuarioDto), "Serviço falhou ao tentar salvar usuário");
-        Assert.isTrue((userService.emailOcupied(usuarioDto.getEmail())), "UserService erroneamente afirma que o e-mail não esta sendo usado.");
-        Assert.isTrue(!(userService.emailOcupied("asdasd@asdasdas.com")), "UserService erroneamente afirma que o e-mail esta sendo usado.");
+        Assert.isTrue((userService.isEmailOcupado(usuarioDto.getEmail())),
+                "UserService erroneamente afirma que o e-mail não esta sendo usado.");
+        Assert.isTrue(!(userService.isEmailOcupado("asdasd@asdasdas.com")),
+                "UserService erroneamente afirma que o e-mail esta sendo usado.");
     }
 
     @Test
@@ -46,6 +49,8 @@ public class TestServicoUsuario {
         usuarioDto.setTermos(true);
         var uDto = userService.save(usuarioDto);
         usuarioDto.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
-        Assert.isTrue(usuarioDto.getSenha() == uDto.getSenha(), "Senha não foi encriptografada\nusuarioDto.senha = " + passwordEncoder.encode(usuarioDto.getSenha()) + "\nuDto.senha = " + uDto.getSenha());
+        Assert.isTrue(usuarioDto.getSenha().equals(uDto.getSenha()),
+                "Senha não foi encriptografada\nusuarioDto.senha = " +
+                        passwordEncoder.encode(usuarioDto.getSenha()) + "\nuDto.senha = " + uDto.getSenha());
     }
 }
