@@ -3,7 +3,7 @@ package com.computeiros.educagreste.entidades;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name="user")
+@Entity(name="usuario")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserEntity {
 
@@ -15,7 +15,7 @@ public class UserEntity {
     private String sobrenome;
     private String email;
     private String senha;
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Funcao.class, fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_funcao",joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "funcao_id"))
     private Set<Funcao> funcoes;
 
